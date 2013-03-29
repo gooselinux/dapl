@@ -1,0 +1,39 @@
+--- dapl-2.0.25/dapl/openib_cma/device.c.bz636193	2010-09-27 17:39:44.000000000 -0400
++++ dapl-2.0.25/dapl/openib_cma/device.c	2010-09-27 17:44:22.000000000 -0400
+@@ -474,12 +474,6 @@ DAT_RETURN dapls_ib_close_hca(IN DAPL_HC
+ 	dapl_dbg_log(DAPL_DBG_TYPE_UTIL, " close_hca: %p->%p\n",
+ 		     hca_ptr, hca_ptr->ib_hca_handle);
+ 
+-	if (hca_ptr->ib_hca_handle != IB_INVALID_HANDLE) {
+-		if (rdma_destroy_id(hca_ptr->ib_trans.cm_id))
+-			return (dapl_convert_errno(errno, "ib_close_device"));
+-		hca_ptr->ib_hca_handle = IB_INVALID_HANDLE;
+-	}
+-
+ 	dapl_os_lock(&g_hca_lock);
+ 	if (g_ib_thread_state != IB_THREAD_RUN) {
+ 		dapl_os_unlock(&g_hca_lock);
+@@ -508,6 +502,23 @@ DAT_RETURN dapls_ib_close_hca(IN DAPL_HC
+ 		dapl_os_sleep_usec(1000);
+ 	}
+ bail:
++
++	if (hca_ptr->ib_trans.ib_cq)
++		ibv_destroy_comp_channel(hca_ptr->ib_trans.ib_cq);
++
++	if (hca_ptr->ib_trans.ib_cq_empty) {
++		struct ibv_comp_channel *channel;
++		channel = hca_ptr->ib_trans.ib_cq_empty->channel;
++		ibv_destroy_cq(hca_ptr->ib_trans.ib_cq_empty);
++		ibv_destroy_comp_channel(channel);
++	}
++
++	if (hca_ptr->ib_hca_handle != IB_INVALID_HANDLE) {
++		if (rdma_destroy_id(hca_ptr->ib_trans.cm_id))
++			return (dapl_convert_errno(errno, "ib_close_device"));
++		hca_ptr->ib_hca_handle = IB_INVALID_HANDLE;
++	}
++
+ 	return (DAT_SUCCESS);
+ }
+ 

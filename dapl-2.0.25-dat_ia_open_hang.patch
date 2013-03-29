@@ -1,0 +1,10 @@
+--- dapl-2.0.25/dapl/openib_cma/device.c.orig	2010-10-20 15:51:43.000000000 -0400
++++ dapl-2.0.25/dapl/openib_cma/device.c	2010-10-20 15:52:36.000000000 -0400
+@@ -358,7 +358,6 @@ DAT_RETURN dapls_ib_open_hca(IN IB_HCA_N
+ 	}
+ 	ret = rdma_bind_addr(cm_id, (struct sockaddr *)&hca_ptr->hca_address);
+ 	if ((ret) || (cm_id->verbs == NULL)) {
+-		rdma_destroy_id(cm_id);
+ 		dapl_log(DAPL_DBG_TYPE_ERR,
+ 			 " open_hca: rdma_bind ERR %s."
+ 			 " Is %s configured?\n", strerror(errno), hca_name);

@@ -1,0 +1,29 @@
+
+--- dapl-2.0.25/#Makefile.am~	2010-12-16 17:52:57.000000000 -0500
++++ dapl-2.0.25/Makefile.am	2010-12-16 17:52:57.000000000 -0500
+@@ -559,7 +559,11 @@ install-exec-hook:
+ 	echo ofa-v2-mlx4_0-1u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mlx4_0 1" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
+ 	echo ofa-v2-mlx4_0-2u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mlx4_0 2" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
+ 	echo ofa-v2-mthca0-1u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mthca0 1" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
+-	echo ofa-v2-mthca0-2u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mthca0 2" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf;
++	echo ofa-v2-mthca0-2u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mthca0 2" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
++	echo ofa-v2-cma-roe-eth2 u2.0 nonthreadsafe default libdaplofa.so.2 dapl.2.0 '"eth2 0" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
++	echo ofa-v2-cma-roe-eth3 u2.0 nonthreadsafe default libdaplofa.so.2 dapl.2.0 '"eth3 0" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
++	echo ofa-v2-scm-roe-mlx4_0-1 u2.0 nonthreadsafe default libdaploscm.so.2 dapl.2.0 '"mlx4_0 1" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf; \
++	echo ofa-v2-scm-roe-mlx4_0-2 u2.0 nonthreadsafe default libdaploscm.so.2 dapl.2.0 '"mlx4_0 2" ""' >> $(DESTDIR)$(sysconfdir)/dat.conf;
+ 
+ uninstall-hook:
+ 	if test -e $(DESTDIR)$(sysconfdir)/dat.conf; then \
+--- dapl-2.0.25/#dapl.spec.in~	2010-12-16 17:52:57.000000000 -0500
++++ dapl-2.0.25/dapl.spec.in	2010-12-16 17:55:02.000000000 -0500
+@@ -110,6 +110,10 @@ echo ofa-v2-mlx4_0-1u u2.0 nonthreadsafe
+ echo ofa-v2-mlx4_0-2u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mlx4_0 2" ""' >> %{_sysconfdir}/dat.conf
+ echo ofa-v2-mthca0-1u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mthca0 1" ""' >> %{_sysconfdir}/dat.conf
+ echo ofa-v2-mthca0-2u u2.0 nonthreadsafe default libdaploucm.so.2 dapl.2.0 '"mthca0 2" ""' >> %{_sysconfdir}/dat.conf
++echo ofa-v2-cma-roe-eth2 u2.0 nonthreadsafe default libdaplofa.so.2 dapl.2.0 '"eth2 0" ""' >> %{_sysconfdir}/dat.conf
++echo ofa-v2-cma-roe-eth3 u2.0 nonthreadsafe default libdaplofa.so.2 dapl.2.0 '"eth3 0" ""' >> %{_sysconfdir}/dat.conf
++echo ofa-v2-scm-roe-mlx4_0-1 u2.0 nonthreadsafe default libdaploscm.so.2 dapl.2.0 '"mlx4_0 1" ""' >> %{_sysconfdir}/dat.conf
++echo ofa-v2-scm-roe-mlx4_0-2 u2.0 nonthreadsafe default libdaploscm.so.2 dapl.2.0 '"mlx4_0 2" ""' >> %{_sysconfdir}/dat.conf
+ 
+ %postun 
+ /sbin/ldconfig

@@ -1,0 +1,25 @@
+
+
+2011-01-28 01:49 diff -ulp dapl-2.0.25/dapl/openib_common/#cq.c~ dapl-2.0.25/dapl/openib_common/cq.c Page 1
+
+
+--- dapl-2.0.25/dapl/openib_common/#cq.c~	2011-01-28 01:49:04.000000000 -0500
++++ dapl-2.0.25/dapl/openib_common/cq.c	2011-01-28 01:49:04.000000000 -0500
+@@ -296,7 +296,7 @@ dapls_wait_comp_channel(IN struct ibv_co
+ 	else if (status == 0)
+ 		return ETIMEDOUT;
+ 	else
+-		return status;
++		return errno;
+ }
+ #endif
+ 
+@@ -321,7 +321,7 @@ dapls_evd_dto_wait(IN DAPL_EVD * evd_ptr
+ 
+ 	dapl_dbg_log(DAPL_DBG_TYPE_UTIL,
+ 		     " cq_object_wait: RET evd %p ibv_cq %p %s\n",
+-		     evd_ptr, ibv_cq, strerror(errno));
++		     evd_ptr, ibv_cq, strerror(status));
+ 
+ 	return dapl_convert_errno(status, "cq_wait_object_wait");
+ }
